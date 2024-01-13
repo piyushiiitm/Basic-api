@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql:latest
+    platform: linux/amd64
+    container_name: mysql
+    restart: always                       # always restart
+    environment:
+      MYSQL_DATABASE: 'assignment'        # name of database
+      MYSQL_ROOT_PASSWORD: 'password'     # password for root user
+    ports:
+      - '3306:3306'                       # host port 3306 is mapper to docker port 3306
+    expose:
+      - '3306'
+    volumes:
+      - mysql-db:/var/lib/mysql
+    networks:
+      - assignment
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    platform: linux/amd64
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '8080:80'
+    networks:
+      - assignment
+networks:
+  assignment:
+    driver: bridge
+volumes:
+    mysql-db:
