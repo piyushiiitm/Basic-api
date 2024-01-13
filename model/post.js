@@ -30,7 +30,7 @@ async function update(params) {
 		const result = await mysqlQuery({ query, params })
 		return result.length ? result[0] : {}
 	} catch (error) {
-		validator.dbError(err)
+		console.log(error)
 	}
 }
 

@@ -13,7 +13,6 @@ app.use(bodyParser.json())
 app.use(`${process.env.BASE_URI}`, postRouter)
 
 app.use('/health', tryCatch(rateLimitter, { maxReq: 5, durationInSec: 5 }), async (req, res, next) => {
-	await producer.send({ topic: 'post', message: { postId: 1, postText: "hello this is only for the testing.we can test." } })
 	res.status(200).json({ message: 'healthy' })
 })
 
