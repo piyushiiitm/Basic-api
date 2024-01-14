@@ -6,9 +6,7 @@ const kafka = new Kafka({
 	logLevel: 0
 })
 
-const producerConn = kafka.producer({
-	createPartitioner: Partitioners.LegacyPartitioner
-})
+const producerConn = kafka.producer({ createPartitioner: Partitioners.LegacyPartitioner })
 const consumerConn = kafka.consumer({ groupId: 'post-group' })
 
 module.exports = {
@@ -17,7 +15,6 @@ module.exports = {
 			await producerConn.connect()
 			await consumerConn.connect()
 		} catch (error) {
-			console.log(error)
 			throw Error('Error in producer/consumer connection')
 		}
 	},

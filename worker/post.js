@@ -6,10 +6,7 @@ const { POST_TOPIC } = require('../topicMapping')
 function processPost(postText) {
 	const wordCount = postText.split(/\s+/).length
 	const wordAvg = (postText.length - wordCount + 1) / wordCount
-	return {
-		wordCount,
-		wordAvg: parseFloat(wordAvg.toFixed(2)),
-	}
+	return { wordCount, wordAvg: parseFloat(wordAvg.toFixed(2)) }
 }
 
 async function postConsumer({ topic, partition, message }) {

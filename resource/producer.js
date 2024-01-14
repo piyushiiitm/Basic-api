@@ -7,10 +7,7 @@ function isValid({ topic, message }) {
 async function send({ topic, message }) {
 	if (!isValid({ topic, message })) return
 	await producer.send({
-		topic,
-		messages: [
-			{ value: JSON.stringify(message) },
-		],
+		topic, messages: [{ value: JSON.stringify(message) }],
 	})
 }
 

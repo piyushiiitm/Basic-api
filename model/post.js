@@ -5,8 +5,7 @@ const validator = require('../utils/validator')
 async function insert(params) {
 	try {
 		const result = await mysqlQuery({
-			query: "INSERT INTO posts (postId, postText) VALUES (?,?) ",
-			params
+			query: "INSERT INTO posts (postId, postText) VALUES (?,?) ", params
 		})
 		return !!result
 	} catch (err) {

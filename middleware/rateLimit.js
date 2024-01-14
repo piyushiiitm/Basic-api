@@ -10,23 +10,17 @@ function getIpAddress(req) {
 }
 
 async function rateLimitter(req, res, next, params) {
-	const key = getIpAddress(req)
-	const { maxReq = 15, durationInSec = 15 } = params
+	const { maxReq = 15, durationInSec = 15, type = 'g' } = params
+	const key = `${type}-${getIpAddress(req)}`
 	const result = await redisDb().get(key)
 	if (!result) {
 		await redisDb().set(key, 1, { EX: durationInSec, NX: true })
 		return next()
 	} else {
-		if (result >= maxReq) {
-			return res.status(429).json({
-				statusCode: 429,
-				message: 'To many requests'
-			})
-		}
+		if (result >= maxReq) return res.status(429).json({ statusCode: 429, message: 'To many requests' })
 		await redisDb().incr(key, 1)
 		return next()
 	}
-
 }
 
 module.exports = {
